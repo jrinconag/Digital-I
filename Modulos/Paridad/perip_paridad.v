@@ -1,4 +1,4 @@
-module peripheral_paridad_M(clk , reset , d_in , cs , addr , rd , wr, d_out );
+module peripheral_paridad(clk , reset , d_in , cs , addr , rd , wr, d_out );
   
   input clk;
   input reset;
@@ -7,13 +7,13 @@ module peripheral_paridad_M(clk , reset , d_in , cs , addr , rd , wr, d_out );
   input [4:0]  addr; // 4 LSB from j1_io_addr
   input rd;
   input wr;
-  output reg [7:0]d_out;
+  output reg [31:0]d_out;
 
 //------------------------------------ regs and wires-------------------------------
 reg [4:0] s; 	//selector mux_4  and write registers
 reg [6:0] A;//---mult_32 input registers
 reg init;
-wire [7:0] result;	//mult_32 output Regs
+wire [31:0] result;	//mult_32 output Regs
 wire done;
 //------------------------------------ regs and wires-------------------------------
 always @(*) begin//------address_decoder------------------------------
@@ -64,13 +64,13 @@ end//-----------------------------------------------mux_4
 
 
 
-paridad_32_M parid1 ( 
+paridad paridad ( 
 	.rst(reset), 
 	.clk(clk), 
 	.init(init), 
 	.done(done),
 	.pp(result), 
-	.A(A), 
+	.A(A)
  );
 
 endmodule
